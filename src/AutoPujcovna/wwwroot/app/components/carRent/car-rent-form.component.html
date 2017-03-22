@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Choose a customer and the car</h1>
+  <form #f="ngForm" novalidate (ngSubmit)="onSubmit()" class="form-inline">
+    <label class="mr-sm-2" for="inlineFormCustomSelect">Customer</label>
+    <select name="selectedUser" [(ngModel)]='selectedUser' required class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomerSelect">
+            <option *ngFor="let user of users" [ngValue]="user">{{user.FirstName}}</option>
+        </select>
+    <label class="mr-sm-2" for="inlineFormCustomSelect">Car</label>
+    <select name="selectedCar" [(ngModel)]='selectedCar' required class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCarSelect">
+            <option *ngFor="let car of cars" [ngValue]="car">{{car.Name}}</option>
+        </select>
+    <button type="submit" class="mr-sm-2 btn-primary">Submit</button>
+    <span *ngIf="(!valid)">Required (Please select customer and car).</span>
+    
+  </form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td *ngFor="let col of columns">{{col.descr}}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rentCar of rentCars">
+        <td *ngFor="let col of columns">
+          <span *ngFor="let data of rentCar | keys"> {{ data.value[col.name]}}</span>
+        </td>
+        <td>
+          <button (click)="Delete(rentCar.car['ID'],rentCar.user['ID'])" class="btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Return car</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
